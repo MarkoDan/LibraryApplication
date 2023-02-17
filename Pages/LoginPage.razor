@@ -1,0 +1,28 @@
+﻿@page "/login"
+@using LibraryApplication.Data
+@using LibraryApplication.Services
+@using LibraryApplication.Data.Models
+@using Microsoft.EntityFrameworkCore
+
+<EditForm Model="@login" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <InputText id="email" class="form-control" @bind-Value="login.Email" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="login.Password" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Log In</button>
+</EditForm>
+
+@code {
+   
+}
+
+

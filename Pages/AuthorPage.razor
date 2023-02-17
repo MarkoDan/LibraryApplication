@@ -1,0 +1,22 @@
+﻿@page "/authors"
+@using LibraryApplication.Services
+@using LibraryApplication.Data.Models
+@inject AuthorService authorService;
+
+<h3>Author Page</h3>
+<EditForm Model=@author OnValidSubmit="HandleSubmit">
+    <label for="NameInput">Name:</label>
+    <InputText id="NameInput" @bind-Value="@author.Name"></InputText>
+    <button type="submit" class="btn-primary">Submit</button>
+</EditForm>
+
+
+@code{
+    Author author = new Author();
+
+    public void HandleSubmit(EditContext editContext)
+    {
+        var newAuthor = (Author)editContext.Model;
+        authorService.AddAuthor(newAuthor);
+    }
+}

@@ -1,0 +1,23 @@
+﻿@page "/books"
+@using LibraryApplication.Services
+@using LibraryApplication.Data.Models
+@inject BookService bookService;
+
+<h3>Book Page</h3>
+<EditForm Model=@book OnValidSubmit="HandleSubmit">
+    <label for="TitleInput">Title:</label>
+    <InputText id="TitleInput" @bind-Value="@book.Title"></InputText>
+    <button type="submit" class="btn-primary">Submit</button>
+</EditForm>
+
+
+@code{
+    Book book = new Book();
+
+    public void HandleSubmit(EditContext editContext)
+    {
+        var newBook = (Book)editContext.Model;
+        bookService.AddBook(newBook);
+    }
+
+}

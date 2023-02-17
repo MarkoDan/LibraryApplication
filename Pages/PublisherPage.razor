@@ -1,0 +1,22 @@
+﻿@page "/publishers"
+@using LibraryApplication.Services
+@using LibraryApplication.Data.Models
+@inject PublisherService publisherService;
+
+<h3>Publisher Page</h3>
+
+<EditForm Model=@publisher OnValidSubmit="HandleSubmit">
+    <label for="NameInput">Name:</label>
+    <InputText id="NameInput" @bind-Value="@publisher.Name"></InputText>
+    <button type="submit" class="btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    Publisher publisher = new Publisher();
+
+    public void HandleSubmit(EditContext editContext)
+    {
+        var newPublisher = (Publisher)editContext.Model;
+        publisherService.AddPublisher(newPublisher);
+    }
+}
