@@ -16,6 +16,11 @@ namespace LibraryApplication.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Login> Logins { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Login>().HasNoKey();
+        }
+
 
 
     }

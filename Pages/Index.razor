@@ -1,10 +1,93 @@
 ﻿@page "/"
+@using LibraryApplication.Services
+@using LibraryApplication.Data.Models
+@inject BookService bookService;
+@inject AuthorService authorService;
+@inject PublisherService publisherService;
+@inject AuthService authService;
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Library</h1>
 
-Welcome to your new app.
+@if (authService.IsLoggedIn == true)
+{
+    
+    <h3>Book Page</h3>
+    <button class="btn btn-primary ml-2" @onclick="LogOut">Logout</button>
+    <EditForm Model=@book OnValidSubmit="HandleBookSubmit">
+        <label for="TitleInput">Title:</label>
+        <InputText id="TitleInput" @bind-Value="@book.Title"></InputText>
+        <button type="submit" class="btn-primary">Submit</button>
+    </EditForm>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    <h3>Author Page</h3>
+    <EditForm Model=@author OnValidSubmit="HandleAuthorSubmit">
+        <label for="NameInput">Name:</label> 
+        <InputText id="NameInput" @bind-Value="@author.Name"></InputText>
+        <button type="submit" class="btn-primary">Submit</button>
+    </EditForm>
 
+    <h3>Publisher Page</h3>
+    <EditForm Model=@publisher OnValidSubmit="HandlePublisherSubmit">
+        <label for="NameInput">Name:</label>
+        <InputText id="NameInput" @bind-Value="@publisher.Name"></InputText>
+        <button type="submit" class="btn-primary">Submit</button>
+    </EditForm>
+}
+else
+{
+    <p>You are not logged in. Please log in to view the content of this page.</p>
+    <button class="btn btn-primary ml-2" @onclick="LogIn">LogIn</button>
+}
+
+
+
+
+
+@code{
+    Book book = new Book();
+    Author author = new Author();
+    Publisher publisher = new Publisher();
+
+
+    public void HandleBookSubmit(EditContext editContext)
+    {
+        var newBook = (Book)editContext.Model;
+        bookService.AddBook(newBook);
+    }
+
+    public void HandleAuthorSubmit(EditContext editContext)
+    {
+        var newAuthor = (Author)editContext.Model;
+        authorService.AddAuthor(newAuthor);
+    }
+
+
+
+    public void HandlePublisherSubmit(EditContext editContext)
+    {
+        var newPublisher = (Publisher)editContext.Model;
+        publisherService.AddPublisher(newPublisher);
+    }
+
+   [Inject] NavigationManager NavigationManager { get; set; }
+    public void LogIn()
+    {
+
+            NavigationManager.NavigateTo("/login");
+
+    }
+
+        public void LogOut()
+    {
+
+            NavigationManager.NavigateTo("/login");
+
+    }
+
+
+
+    
+
+
+}

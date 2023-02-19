@@ -28,10 +28,14 @@
 @code {
     User user = new User();
 
+    [Inject]
+    private NavigationManager navigationManager { get; set; }
+
     public void HandleSubmit(EditContext editContext)
     {
         var newUser = (User)editContext.Model;
         registrationService.RegisterUser(newUser);
+        navigationManager.NavigateTo("/login");
 
     }
 }

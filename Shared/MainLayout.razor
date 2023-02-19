@@ -1,4 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Web;
+
+
 
 <PageTitle>LibraryApplication</PageTitle>
 
@@ -10,6 +13,8 @@
     <main>
         <div class="top-row px-4">
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            @*<button class="btn btn-primary ml-2" @onclick="LogIn">@name</button>*@
+@*            <a href=login>Login</a>*@
         </div>
 
         <article class="content px-4">
@@ -17,3 +22,18 @@
         </article>
     </main>
 </div>
+
+@code{
+
+    [Inject] NavigationManager NavigationManager { get; set; }
+    string name = "LogIn";
+    public void LogIn()
+    {
+
+            NavigationManager.NavigateTo("login");
+            name = "LogOut";
+
+    }
+    
+}
+

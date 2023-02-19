@@ -18,6 +18,7 @@ builder.Services.AddTransient<AuthorService>();
 builder.Services.AddTransient<PublisherService>();
 builder.Services.AddTransient<BookService>();
 builder.Services.AddTransient<RegistrationService>();
+builder.Services.AddTransient<AuthService>();
 
 
 //Connection String
