@@ -2,7 +2,7 @@
 {
     public class AuthService
     {
-        public bool IsLoggedIn { get; private set; } = false;
+        public bool IsLoggedIn { get; set; } = false;
 
         public void Login()
         {

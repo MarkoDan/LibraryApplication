@@ -11,43 +11,87 @@
 
 @if (authService.IsLoggedIn == true)
 {
-    
-    <h3>Book Page</h3>
-    <button class="btn btn-primary ml-2" @onclick="LogOut">Logout</button>
-    <EditForm Model=@book OnValidSubmit="HandleBookSubmit">
-        <label for="TitleInput">Title:</label>
-        <InputText id="TitleInput" @bind-Value="@book.Title"></InputText>
-        <button type="submit" class="btn-primary">Submit</button>
-    </EditForm>
+                <button class="btn btn-primary ml-2" @onclick="LogOut">Logout</button>
+    <div class="container">
+        <h3>Add New Author</h3>
+        <EditForm Model=@author OnValidSubmit="HandleAuthorSubmit">
+            <label for="NameInput">Name:</label> 
+            <InputText id="NameInput" @bind-Value="@author.Name"></InputText>
 
-    <h3>Author Page</h3>
-    <EditForm Model=@author OnValidSubmit="HandleAuthorSubmit">
-        <label for="NameInput">Name:</label> 
-        <InputText id="NameInput" @bind-Value="@author.Name"></InputText>
-        <button type="submit" class="btn-primary">Submit</button>
-    </EditForm>
+            <label for="DateOfBirthInput">Date Of Birth:</label> 
+            <InputDate id="DateofBirthInput" @bind-Value="@author.DateOfBirth"></InputDate>
+            
 
-    <h3>Publisher Page</h3>
-    <EditForm Model=@publisher OnValidSubmit="HandlePublisherSubmit">
-        <label for="NameInput">Name:</label>
-        <InputText id="NameInput" @bind-Value="@publisher.Name"></InputText>
-        <button type="submit" class="btn-primary">Submit</button>
-    </EditForm>
+            <label for="NationalityInput">Nationality:</label> 
+            <InputText id="NationalityInput" @bind-Value="@author.Nationality"></InputText>
+
+            <button type="submit" class="btn btn-primary ml-2">Submit</button>
+        </EditForm>
+    </div>
+
+    <div class="container">
+        <h3>Add New Publisher</h3>
+        <EditForm Model=@publisher OnValidSubmit="HandlePublisherSubmit">
+            <label for="NameInput">Name:</label>
+            <InputText id="NameInput" @bind-Value="@publisher.Name"></InputText>
+
+             <label for="AddressInput">Address:</label>
+            <InputText id="AddressInput" @bind-Value="@publisher.Address"></InputText>
+
+            <label for="PhoneNumberInput">Phone Number:</label>
+            <InputText id="PhoneNumberInput" @bind-Value="@publisher.PhoneNumber"></InputText>
+            <button type="submit" class="btn btn-primary ml-2">Submit</button>
+        </EditForm>
+    </div>
+
+    <div class="container">
+        <select class="form-control" @bind="@author.Name">
+            <option value="">-- Select Author --</option>
+            @foreach (var author_name in Authors)
+            {
+                <option value="@author_name.Name"></option>
+            }
+        </select>
+       
+    </div>
+
+
+@* <h3>Add New Book</h3>
+        <EditForm Model=@book OnValidSubmit="HandleBookSubmit">
+            <label for="TitleInput">Title:</label>
+            <InputText id="TitleInput" @bind-Value="@book.Title"></InputText>
+            <button type="submit" class="btn-primary">Submit</button>
+        </EditForm>
+*@
+
+
+
+
 }
 else
 {
     <p>You are not logged in. Please log in to view the content of this page.</p>
-    <button class="btn btn-primary ml-2" @onclick="LogIn">LogIn</button>
+    <button class="btn btn-primary ml-2" @onclick="LogIn">Login</button>
 }
 
+<style>
+    .container{
+        margin: 20px;
+        padding: 20px;
+        background-color: #FFFFFF;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        border-radius: 10px;
+    }
 
-
+</style>
 
 
 @code{
     Book book = new Book();
     Author author = new Author();
     Publisher publisher = new Publisher();
+
+    private List<Author> Authors { get; set; } = new List<Author>();
 
 
     public void HandleBookSubmit(EditContext editContext)
@@ -70,7 +114,7 @@ else
         publisherService.AddPublisher(newPublisher);
     }
 
-   [Inject] NavigationManager NavigationManager { get; set; }
+    [Inject] NavigationManager NavigationManager { get; set; }
     public void LogIn()
     {
 
@@ -80,14 +124,10 @@ else
 
         public void LogOut()
     {
-
+            authService.Logout();
             NavigationManager.NavigateTo("/login");
 
     }
-
-
-
-    
 
 
 }

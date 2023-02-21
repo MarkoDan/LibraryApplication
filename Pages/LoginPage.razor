@@ -4,8 +4,9 @@
 @using LibraryApplication.Data.Models
 @using Microsoft.EntityFrameworkCore
 
-<h1>LogIn</h1>
-<EditForm Model="@loginModel" OnValidSubmit="@HandleValidSubmit">
+<div class="login-container">
+    <h2>Login</h2>
+    <EditForm Model="@loginModel" OnValidSubmit="@HandleValidSubmit" class="login-form">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -19,11 +20,36 @@
         <InputText id="password" type="password" class="form-control" @bind-Value="loginModel.Password" />
     </div>
 
-    <button type="submit" class="btn btn-primary">LogIn</button>
+    <button type="submit" class="btn btn-primary">Login</button>
     <div class="form-group">
         <a href="/register" class="register-link">Create new account</a>
     </div>
 </EditForm>
+</div>
+
+
+<style>
+        .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #FFFFFF;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        border-radius: 10px;
+      }
+        
+          .login-form button{
+        background-color: #007BFF;
+        color: #FFFFFF;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 5px;
+        height: 40px;
+        border: none;
+        width: 100%;
+        margin-top: 10px;
+      }
+</style>
 
 @code {
     Login loginModel = new Login();
